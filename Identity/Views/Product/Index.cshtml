@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Identity.ViewModels.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<div class="container-fluid bg-light px-5 pt-3">
+    <p><a class="btn btn-primary" asp-action="Create">Add New Item</a></p>
+    <table id="example" class="table display table-responsive" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Unit)
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Unit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Unit)
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    new DataTable('#example', {
+        initComplete: function () {
+            this.api()
+                .columns()
+                .every(function () {
+                    let column = this;
+                    let title = column.footer().textContent;
+                    let input = document.createElement('input');
+                    input.placeholder = title;
+                    column.footer().replaceChildren(input);
+                    input.addEventListener('keyup', () => {
+                        if (column.search() !== this.value) {
+                            column.search(input.value).draw();
+                        }
+                    });
+                });
+        }
+    });
+</script>

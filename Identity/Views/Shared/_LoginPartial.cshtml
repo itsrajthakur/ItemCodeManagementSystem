@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Identity.Areas.Identity.Data
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<ul class="menu-links p-0">
+@if (SignInManager.IsSignedIn(User))
+{
+        <li class="">
+            <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <i class='bx bx-user icon'></i>
+                <span class="text nav-text">@UserManager.GetUserName(User)</span>
+            </a>
+        </li>
+        <li class="">
+            <form id="logoutForm" class="w-100 border-0 d-flex" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Category", new { area = "" })">
+                <button id="logout" class="w-100 border-0 d-flex" type="submit">
+                    <a class="w-100 border-0 py-2 d-flex">
+                       <i class='bx bx-log-out icon'></i>
+                       <span class="text nav-text">LogOut</span>
+                    </a>
+                </button>
+            </form>
+        </li>
+}
+    <li class="mode">
+        <div class="sun-moon">
+            <i class='bx bx-moon icon moon'></i>
+            <i class='bx bx-sun icon sun'></i>
+        </div>
+        <span class="mode-text text">Dark mode</span>
+        <div class="toggle-switch">
+            <span class="switch"></span>
+        </div>
+    </li>
+</ul>
